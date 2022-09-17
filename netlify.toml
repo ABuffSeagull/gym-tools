@@ -1,0 +1,15 @@
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200
+
+[[headers]]
+for = "/manifest.webmanifest"
+	[headers.values]
+	content-type = "application/manifest+json"
+
+[[headers]]
+for = "/assets/*"
+	[headers.values]
+	cache-control = "max-age=31560000, immutable"
+
