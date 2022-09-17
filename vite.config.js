@@ -7,9 +7,6 @@ export default defineConfig({
     elmPlugin(),
     VitePWA({
       registerType: "autoUpdate",
-      devOptions: {
-        enabled: true,
-      },
       manifest: {
         name: "Tools",
         short_name: "Tools",

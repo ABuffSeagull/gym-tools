@@ -3,6 +3,7 @@ module Main exposing (Msg, main)
 import Browser
 import Element exposing (..)
 import Element.Background as Bg
+import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
 import Html exposing (Html)
@@ -33,17 +34,26 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    layout [] <|
-        column [ centerX, centerY, width fill, paddingXY 12 0, spacing 25 ]
-            [ row [ width fill, spacing 10, paddingXY 15 0, Font.color (rgb 1 1 1) ] <|
+    layoutWith
+        { options = [ focusStyle { backgroundColor = Nothing, shadow = Nothing, borderColor = Just (rgb255 0x69 0x99 0x5D) } ] }
+        [ Bg.color (rgb255 0x39 0x46 0x48), Font.color (rgb 1 1 1) ]
+    <|
+        column [ centerX, centerY, width fill, paddingXY 12 0, spacing 15 ]
+            [ row [ width fill, spacing 10, paddingXY 15 0 ] <|
                 List.map
                     viewPlate
                     (calculatePlates model)
-            , Input.text [ htmlAttribute (Html.Attributes.attribute "inputmode" "numeric") ]
+            , Input.text
+                [ htmlAttribute (Html.Attributes.attribute "inputmode" "numeric")
+                , Bg.color (rgba 0 0 0 0)
+                , Border.width 3
+                , Border.dashed
+                , Border.rounded 10
+                ]
                 { onChange = OnInput
                 , text = String.fromInt model
                 , placeholder = Nothing
-                , label = Input.labelAbove [] (text "Weight")
+                , label = Input.labelAbove [ paddingXY 0 10 ] (text "Weight")
                 }
             ]
 
@@ -62,7 +72,7 @@ viewPlate plate =
         ( bgColor, numString ) =
             case plate of
                 Full ->
-                    ( Bg.color (rgb255 0xB3 0x00 0x1B), "45" )
+                    ( Bg.color (rgb255 0xBB 0x34 0x2F), "45" )
 
                 Half ->
                     ( Bg.color (rgb255 0xF4 0x9D 0x37), "25" )
@@ -94,6 +104,7 @@ calculatePlates weight =
 skimOffWeight : ( Plate, Int ) -> ( Int, List Plate ) -> ( Int, List Plate )
 skimOffWeight ( plate, weight ) ( currentWeight, weightsSoFar ) =
     let
+        times : Int
         times =
             currentWeight // weight
     in
