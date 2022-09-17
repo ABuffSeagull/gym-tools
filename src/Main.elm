@@ -38,13 +38,12 @@ view model =
         { options = [ focusStyle { backgroundColor = Nothing, shadow = Nothing, borderColor = Just (rgb255 0x69 0x99 0x5D) } ] }
         [ Bg.color (rgb255 0x39 0x46 0x48), Font.color (rgb 1 1 1) ]
     <|
-        column [ centerX, centerY, width (maximum 375 fill), paddingXY 12 0, spacing 15 ]
-            [ row [ width fill, spacing 10, paddingXY 15 0 ] <|
-                List.map
-                    viewPlate
-                    (calculatePlates model)
+        column [ centerX, height fill, width (maximum 375 fill), paddingXY 12 50, spacing 15 ]
+            [ row [ centerY, width fill, spacing 10, paddingXY 15 0, scrollbarX ] <|
+                List.map viewPlate (calculatePlates model)
             , Input.text
-                [ htmlAttribute (Html.Attributes.attribute "inputmode" "numeric")
+                [ centerY
+                , htmlAttribute (Html.Attributes.attribute "inputmode" "numeric")
                 , Bg.color (rgba 0 0 0 0)
                 , Border.width 3
                 , Border.dashed
@@ -55,6 +54,12 @@ view model =
                 , placeholder = Nothing
                 , label = Input.labelAbove [ paddingXY 0 10 ] (text "Weight")
                 }
+
+            {- , row [ width fill, spacing 20, alignBottom ]
+               [ Input.button [ centerX, paddingXY 25 15 ] { onPress = Nothing, label = text "Weights" }
+               , Input.button [ centerX, paddingXY 25 15 ] { onPress = Nothing, label = text "Sets" }
+               ]
+            -}
             ]
 
 
@@ -72,21 +77,28 @@ viewPlate plate =
         ( bgColor, numString ) =
             case plate of
                 Full ->
-                    ( Bg.color (rgb255 0xBB 0x34 0x2F), "45" )
+                    ( rgb255 0xBB 0x34 0x2F, "45" )
 
                 Half ->
-                    ( Bg.color (rgb255 0xF4 0x9D 0x37), "25" )
+                    ( rgb255 0xF4 0x9D 0x37, "25" )
 
                 Quarter ->
-                    ( Bg.color (rgb255 0x25 0x5C 0x99), "10" )
+                    ( rgb255 0x25 0x5C 0x99, "10" )
 
                 Side ->
-                    ( Bg.color (rgb255 0x1C 0x7C 0x54), "5" )
+                    ( rgb255 0x1C 0x7C 0x54, "5" )
 
                 Snack ->
-                    ( Bg.color (rgb255 0x02 0x02 0x02), "2.5" )
+                    ( rgb255 0x02 0x02 0x02, "2.5" )
     in
-    el [ width (maximum 60 fill), centerX, paddingXY 15 45, bgColor, Font.center ] (text numString)
+    el
+        [ width (maximum 60 fill)
+        , centerX
+        , paddingXY 15 45
+        , Bg.color bgColor
+        , Font.center
+        ]
+        (text numString)
 
 
 weightTuples : List ( Plate, Int )
