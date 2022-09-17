@@ -38,7 +38,7 @@ view model =
         { options = [ focusStyle { backgroundColor = Nothing, shadow = Nothing, borderColor = Just (rgb255 0x69 0x99 0x5D) } ] }
         [ Bg.color (rgb255 0x39 0x46 0x48), Font.color (rgb 1 1 1) ]
     <|
-        column [ centerX, centerY, width fill, paddingXY 12 0, spacing 15 ]
+        column [ centerX, centerY, width (maximum 375 fill), paddingXY 12 0, spacing 15 ]
             [ row [ width fill, spacing 10, paddingXY 15 0 ] <|
                 List.map
                     viewPlate
