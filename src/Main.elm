@@ -1,4 +1,4 @@
-module Main exposing (main)
+module Main exposing (Msg, main)
 
 import Browser
 import Element exposing (..)
