@@ -17,7 +17,8 @@
     "elm-review": "^2.7.4",
     "elm-tooling": "^1.8.0",
     "vite": "^3.0.9",
-    "vite-plugin-elm": "^2.7.2"
+    "vite-plugin-elm": "^2.7.2",
+    "vite-plugin-pwa": "^0.12.7"
   },
   "dependencies": {
     "elm-debug-transformer": "^1.1.2"
